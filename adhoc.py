@@ -81,4 +81,7 @@ class AdhocTracker(object):
                 }]
         }
         r = requests.post(self.tracker_url, json = payload, timeout = self.timeout)
-        assert(r.json().get("status") == "ok")
+        json = r.json()
+        if json.get("status") != "ok":
+            raise Exception("status error: " + str(json))
+        return json
